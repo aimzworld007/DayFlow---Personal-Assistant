@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "272279662953",
+    "project_id": "dayflow-personal-assistant",
+    "storage_bucket": "dayflow-personal-assistant.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:272279662953:android:da14f429ddff50e56f4df8",
+        "android_client_info": {
+          "package_name": "com.dayflow.personalassistant"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCMTvClYe4hI_ejNrjA96lYbDZiHYqCFjs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

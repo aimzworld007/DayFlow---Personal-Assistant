@@ -1,0 +1,6 @@
+{
+  "name": "Personal Assistant",
+  "description": "A complete Personal Assistant to organize daily notes, manage reminders, track habits, monitor bank accounts, calculate net worth, and handle advanced money ledger records with cross-device sync and local guest mode support.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
