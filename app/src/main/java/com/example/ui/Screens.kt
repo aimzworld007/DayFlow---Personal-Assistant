@@ -239,12 +239,22 @@ fun MainAppContainer(
         )
     }
 
-    val authUser = remember(isGuest, guestModeSelected) { FirebaseAuth.getInstance().currentUser }
+    val authUser = remember(isGuest, guestModeSelected) {
+        try {
+            FirebaseAuth.getInstance().currentUser
+        } catch (t: Throwable) {
+            null
+        }
+    }
     var forceVerificationCheck by remember { mutableStateOf(0) }
     val isVerified = remember(authUser, forceVerificationCheck) {
         if (authUser == null) true
         else {
-            authUser.reload()
+            try {
+                authUser.reload()
+            } catch (t: Throwable) {
+                Log.e("Screens", "Error reloading user: ${t.message}")
+            }
             val verified = authUser.isEmailVerified
             val isGoogle = authUser.providerData.any { it.providerId == "google.com" }
             verified || isGoogle
@@ -2849,20 +2859,30 @@ fun SettingsScreen(viewModel: AssistantViewModel, onBack: () -> Unit) {
 
     val context = LocalContext.current
     val scope = rememberCoroutineScope()
-    val uid = remember(isGuest) { FirebaseAuth.getInstance().currentUser?.uid }
+    val uid = remember(isGuest) {
+        try {
+            FirebaseAuth.getInstance().currentUser?.uid
+        } catch (t: Throwable) {
+            null
+        }
+    }
     var photoUrl by remember { mutableStateOf("") }
 
     LaunchedEffect(uid) {
         if (uid != null) {
-            val fStore = com.google.firebase.firestore.FirebaseFirestore.getInstance()
-            fStore.collection("users").document(uid).addSnapshotListener { snapshot, _ ->
-                if (snapshot != null && snapshot.exists()) {
-                    photoUrl = snapshot.getString("photoUrl") ?: ""
-                    val disp = snapshot.getString("displayName")
-                    if (disp != null && disp != nickname) {
-                        viewModel.updateProfileName(disp)
+            try {
+                val fStore = com.google.firebase.firestore.FirebaseFirestore.getInstance()
+                fStore.collection("users").document(uid).addSnapshotListener { snapshot, _ ->
+                    if (snapshot != null && snapshot.exists()) {
+                        photoUrl = snapshot.getString("photoUrl") ?: ""
+                        val disp = snapshot.getString("displayName")
+                        if (disp != null && disp != nickname) {
+                            viewModel.updateProfileName(disp)
+                        }
                     }
                 }
+            } catch (t: Throwable) {
+                Log.e("Screens", "Firestore snapshot failed: ${t.message}")
             }
         }
     }

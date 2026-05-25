@@ -21,10 +21,10 @@ class AssistantRepository(
 
     // Firebase Helper References
     private val auth: FirebaseAuth?
-        get() = try { FirebaseAuth.getInstance() } catch (e: Exception) { null }
+        get() = try { FirebaseAuth.getInstance() } catch (e: Throwable) { null }
 
     private val firestore: FirebaseFirestore?
-        get() = try { FirebaseFirestore.getInstance() } catch (e: Exception) { null }
+        get() = try { FirebaseFirestore.getInstance() } catch (e: Throwable) { null }
 
     // Auth State flow
     private val _isGuestMode = MutableStateFlow(true)

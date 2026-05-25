@@ -39,9 +39,13 @@ object FirebaseServices {
             setupMessagingToken()
 
             // Setup Crashlytics
-            FirebaseCrashlytics.getInstance().setCrashlyticsCollectionEnabled(true)
-            Log.d(TAG, "Crashlytics collection enabled.")
-        } catch (e: Exception) {
+            try {
+                FirebaseCrashlytics.getInstance().setCrashlyticsCollectionEnabled(true)
+                Log.d(TAG, "Crashlytics collection enabled.")
+            } catch (t: Throwable) {
+                Log.e(TAG, "Failed to initialize Crashlytics: ${t.message}")
+            }
+        } catch (e: Throwable) {
             Log.e(TAG, "Error initializing firebase services: ${e.message}", e)
         }
     }
@@ -54,7 +58,7 @@ object FirebaseServices {
                 DebugAppCheckProviderFactory.getInstance()
             )
             Log.d(TAG, "Firebase App Check initialized with Debug provider (Play Integrity fallback ready).")
-        } catch (e: Exception) {
+        } catch (e: Throwable) {
             Log.e(TAG, "Error setting up App Check: ${e.message}")
         }
     }
@@ -85,7 +89,7 @@ object FirebaseServices {
                     Log.w(TAG, "Remote config fetch failed.")
                 }
             }
-        } catch (e: Exception) {
+        } catch (e: Throwable) {
             Log.e(TAG, "Error initiating remote config: ${e.message}")
         }
     }
@@ -101,7 +105,7 @@ object FirebaseServices {
                 Log.d(TAG, "Retrieved FCM Token: $token")
                 // In a production app, we would send this to the Firestore collection settings/user profile path.
             }
-        } catch (e: Exception) {
+        } catch (e: Throwable) {
             Log.e(TAG, "Error starting messaging services: ${e.message}")
         }
     }

@@ -6,4 +6,5 @@ plugins {
   alias(libs.plugins.roborazzi) apply false
   alias(libs.plugins.secrets) apply false
   id("com.google.gms.google-services") version "4.4.4" apply false
+  alias(libs.plugins.firebase.crashlytics) apply false
 }

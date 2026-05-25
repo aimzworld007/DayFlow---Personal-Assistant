@@ -5,6 +5,7 @@ plugins {
   alias(libs.plugins.roborazzi)
   alias(libs.plugins.secrets)
   id("com.google.gms.google-services")
+  alias(libs.plugins.firebase.crashlytics)
 }
 
 android {
